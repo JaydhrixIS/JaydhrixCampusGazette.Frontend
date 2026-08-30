@@ -1,0 +1,53 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <main>
+        <header class="navbar" id="topNav">
+            <div class="navbar-left">
+                <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation">
+                    <span>☰</span>
+                </button>
+                <a href="/" class="brand-link">
+                    <img src="Pictures/Classroom.jpg" alt="Logo">
+                    <span class="navbar-title">Jaydhirx Campus Gazette</span>
+                </a>
+            </div>
+
+            <nav class="nav-links" id="navLinks">
+                <!-- Converted from single-item dropdowns to clean, direct links -->
+                <a href="/authority-login" class="nav-link" onclick="closeMobileMenu()">Authority Login</a>
+                <a href="/register/authority" class="nav-link" onclick="closeMobileMenu()">Authority Registration</a>
+
+                <a href="#services" class="nav-link" onclick="closeMobileMenu()">Service</a>
+                <a href="#features" class="nav-link" onclick="closeMobileMenu()">Features</a>
+                <a href="/pricing" class="nav-link" onclick="closeMobileMenu()">Pricing</a>
+                <a href="#faq" class="nav-link" onclick="closeMobileMenu()">FAQ</a>
+                <a href="#feedback" class="nav-link" onclick="closeMobileMenu()">Feedback</a>
+
+                <!-- Fixed Typo: Changed 'About As' to 'About Us' -->
+                <a href="/about" class="nav-link" onclick="closeMobileMenu()">About Us</a>
+
+                <label class="theme-switch" title="Toggle Light/Dark Mode">
+                    <input type="checkbox" id="themeCheckbox" onchange="toggleTheme()">
+                    <div class="slider">
+                        <span class="icon moon">🌙</span>
+                        <span class="icon sun">☀️</span>
+                        <div class="knob"></div>
+                    </div>
+                </label>
+            </nav>
+        </header>
+
+        <article class="content px-4">
+            @Body
+        </article>
+
+        <footer>&copy; @DateTime.Now.Year Jaydhirx Campus Gazette — All rights reserved.</footer>
+    </main>
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>

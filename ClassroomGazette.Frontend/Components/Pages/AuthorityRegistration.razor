@@ -1,0 +1,347 @@
+﻿@page "/register/authority"
+@rendermode InteractiveServer
+
+<div class="card">
+    <h2>Institution Registration</h2>
+    <p class="note">Fill out the details below. Fields marked with an asterisk (*) are mandatory.</p>
+
+    <EditForm Model="this" OnValidSubmit="HandleRegistration">
+        <!-- 1. Common Fields for All -->
+        <div class="row">
+            <div class="col">
+                <label>Authority Type *</label>
+                <select class="fullwidth aspNet-DropDownList" @bind="AuthorityType" required>
+                    <option value="">-- Select Authority --</option>
+                    <option value="School">School</option>
+                    <option value="College">College</option>
+                    <option value="University">University</option>
+                </select>
+            </div>
+            <div class="col">
+                <label>Preferred Subdomain *</label>
+                <input type="text" class="fullwidth" placeholder="e.g. harvard (no spaces)" @bind="Subdomain" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label>Super Admin Name *</label>
+                <input type="text" class="fullwidth" placeholder="Full Name" @bind="SuperAdminName" required />
+            </div>
+            <div class="col">
+                <label>Super Admin Email Address *</label>
+                <input type="email" class="fullwidth" placeholder="admin@institution.edu" @bind="SuperAdminEmail" required />
+            </div>
+            <div class="col">
+                <label>Super Admin Mobile Number *</label>
+                <input type="tel" class="fullwidth" placeholder="10-digit number" pattern="[0-9]{10}" @bind="SuperAdminMobile" required />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label>Institution Logo *</label>
+                <InputFile class="fullwidth file-upload" OnChange="HandleLogoUpload" accept=".png, .jpg, .jpeg" required />
+                <span style="display: block; font-size: 0.85rem; color: var(--muted); margin-top: 6px;">File size should be 1MB OR Less then 1MB.</span>
+                @if (!string.IsNullOrEmpty(LogoError))
+                {
+                    <span style="color: #ff6b6b; font-size: 0.85rem; margin-top: 4px; display: block;">@LogoError</span>
+                }
+            </div>
+            <div class="col">
+                <label>Primary Brand Color</label>
+                <input type="color" class="fullwidth color-picker" @bind="BrandColor" />
+            </div>
+        </div>
+
+        <label>Institute Address *</label>
+        <div class="row" style="margin-top:0;">
+            <div class="col">
+                <input type="text" class="fullwidth" placeholder="Whole address of institute" @bind="FullAddress" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" class="fullwidth" placeholder="City" @bind="City" required />
+            </div>
+            <div class="col">
+                <input type="text" class="fullwidth" placeholder="State" @bind="State" required />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" class="fullwidth" placeholder="Country" @bind="Country" required />
+            </div>
+            <div class="col">
+                <input type="text" class="fullwidth" placeholder="Zipcode (6 digits)" pattern="[0-9]{6}" maxlength="6" @bind="Zipcode" required />
+            </div>
+        </div>
+
+        <hr class="divider" />
+
+        @if (AuthorityType == "School")
+        {
+            <!-- 2. School Specific Fields -->
+            <div class="row">
+                <div class="col">
+                    <label>School Name *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter School Name" @bind="SchoolName" required />
+                </div>
+                <div class="col">
+                    <label>School Level / Type *</label>
+                    <select class="fullwidth aspNet-DropDownList" @bind="SchoolLevel" required>
+                        <option value="">-- Select Level --</option>
+                        <option value="Pre - Primary">Pre - Primary</option>
+                        <option value="Primary">Primary</option>
+                        <option value="Secondary">Secondary</option>
+                        <option value="Higher Secondary">Higher Secondary</option>
+                        <option value="All">All</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Affiliated Board *</label>
+                    <input type="text" class="fullwidth" placeholder="E.g.: CBSE / GSHSEB" @bind="AffiliatedBoard" required="@(!IsBoardDisabled)" disabled="@IsBoardDisabled" />
+                </div>
+                <div class="col">
+                    <label>School Registration / Affiliation Number *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter Reg/Affiliation No." @bind="SchoolRegNumber" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Principal's Name *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter Principal's Name" @bind="PrincipalName" required />
+                </div>
+                <div class="col"></div>
+            </div>
+        }
+        else if (AuthorityType == "College")
+        {
+            <!-- 3. College Specific Fields -->
+            <div class="row">
+                <div class="col">
+                    <label>College Name *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter College Name" @bind="CollegeName" required />
+                </div>
+                <div class="col">
+                    <label>Affiliated University Name *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter Affiliated University" @bind="AffiliatedUniversity" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>College Type / Stream *</label>
+                    <input type="text" class="fullwidth" placeholder="e.g. Engineering, Medical, Arts" @bind="CollegeStream" required />
+                </div>
+                <div class="col">
+                    <label>College Code *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter College Code" @bind="CollegeCode" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Dean / Director's Name *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter Dean/Director Name" @bind="DeanName" required />
+                </div>
+            </div>
+
+            <label>Accreditation / Approvals *</label>
+            <div class="checkbox-grid">
+                @foreach (var key in Accreditations.Keys.ToList())
+                {
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="chk_@key.Replace(" ", "")" @bind="Accreditations[key]" />
+                        <label for="chk_@key.Replace(" ", "")" class="inline-label">@key</label>
+                    </div>
+                }
+            </div>
+        }
+        else if (AuthorityType == "University")
+        {
+            <!-- 4. University Specific Fields -->
+            <div class="row">
+                <div class="col">
+                    <label>University Name *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter University Name" @bind="UniversityName" required />
+                </div>
+                <div class="col">
+                    <label>University Type *</label>
+                    <select class="fullwidth aspNet-DropDownList" @bind="UniversityType" required>
+                        <option value="">-- Select Type --</option>
+                        <option value="Central University">Central University</option>
+                        <option value="State University">State University</option>
+                        <option value="Institutes of National Importance">Institutes of National Importance</option>
+                        <option value="Open University">Open University</option>
+                        <option value="Deemed University">Deemed University</option>
+                        <option value="Private University">Private University</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>UGC Registration Number *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter UGC Reg No." @bind="UgcRegNumber" required />
+                </div>
+                <div class="col">
+                    <label>Vice - Chancellor's Name *</label>
+                    <input type="text" class="fullwidth" placeholder="Enter Vice-Chancellor Name" @bind="ViceChancellorName" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Total Number of Affiliated Colleges</label>
+                    <input type="number" class="fullwidth" placeholder="Enter total colleges" @bind="TotalAffiliatedColleges" />
+                </div>
+                <div class="col"></div>
+            </div>
+        }
+
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;" />
+
+        <!-- ✨ UPDATED: Password Fields with Show/Hide Wrappers ✨ -->
+        <div class="row">
+            <div class="col">
+                <label>Create Password *</label>
+                <div class="password-wrapper">
+                    <input type="@(ShowPassword ? "text" : "password")" class="fullwidth password-field" placeholder="Enter a strong password" @bind="Password" required />
+                    <button type="button" class="toggle-password-btn" @onclick="TogglePasswordVisibility">
+                        @(ShowPassword ? "Hide" : "Show")
+                    </button>
+                </div>
+            </div>
+            <div class="col">
+                <label>Confirm Password *</label>
+                <div class="password-wrapper">
+                    <input type="@(ShowConfirmPassword ? "text" : "password")" class="fullwidth password-field" placeholder="Re-enter your password" @bind="ConfirmPassword" required />
+                    <button type="button" class="toggle-password-btn" @onclick="ToggleConfirmPasswordVisibility">
+                        @(ShowConfirmPassword ? "Hide" : "Show")
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="declaration-box" style="margin-top: 24px;">
+            <input type="checkbox" id="chkDeclare" @bind="IsDeclared" required />
+            <label for="chkDeclare" class="inline-label">Above all information are correct and verify by me. *</label>
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary" disabled="@(!IsDeclared || !string.IsNullOrEmpty(LogoError))">Complete Registration</button>
+        </div>
+
+        @if (!string.IsNullOrEmpty(StatusMessage))
+        {
+            <div class="status-msg" style="color: @(StatusMessage.Contains("Error") ? "#ff6b6b" : "var(--neon)");">
+                @StatusMessage
+            </div>
+        }
+    </EditForm>
+</div>
+
+@code {
+    // 1. Common Bindings
+    private string AuthorityType { get; set; } = "";
+    private string Subdomain { get; set; } = "";
+    private string SuperAdminName { get; set; } = "";
+    private string SuperAdminEmail { get; set; } = "";
+    private string SuperAdminMobile { get; set; } = "";
+    private string BrandColor { get; set; } = "#a770ef";
+
+    private string FullAddress { get; set; } = "";
+    private string City { get; set; } = "";
+    private string State { get; set; } = "";
+    private string Country { get; set; } = "";
+    private string Zipcode { get; set; } = "";
+
+    private string LogoError { get; set; } = "";
+    private bool IsDeclared { get; set; } = false;
+
+    // ✨ NEW: Security Bindings & Independent Booleans ✨
+    private string Password { get; set; } = "";
+    private string ConfirmPassword { get; set; } = "";
+
+    private bool ShowPassword { get; set; } = false;
+    private bool ShowConfirmPassword { get; set; } = false;
+
+    // 2. School Bindings
+    private string SchoolName { get; set; } = "";
+    private string SchoolLevel { get; set; } = "";
+    private string AffiliatedBoard { get; set; } = "";
+    private string SchoolRegNumber { get; set; } = "";
+    private string PrincipalName { get; set; } = "";
+
+    private bool IsBoardDisabled => SchoolLevel == "Pre - Primary" || SchoolLevel == "Primary";
+
+    // 3. College Bindings
+    private string CollegeName { get; set; } = "";
+    private string AffiliatedUniversity { get; set; } = "";
+    private string CollegeStream { get; set; } = "";
+    private string CollegeCode { get; set; } = "";
+    private string DeanName { get; set; } = "";
+
+    private Dictionary<string, bool> Accreditations = new()
+    {
+        {"UGC Recognition", false}, {"State Government / NOC", false},
+        {"University Affiliation", false}, {"NAAC Grade", false},
+        {"NBA", false}, {"AICTE", false}, {"NMC", false},
+        {"BCI", false}, {"NCTE", false}, {"PCI", false}
+    };
+
+    // 4. University Bindings
+    private string UniversityName { get; set; } = "";
+    private string UniversityType { get; set; } = "";
+    private string UgcRegNumber { get; set; } = "";
+    private string ViceChancellorName { get; set; } = "";
+    private int? TotalAffiliatedColleges { get; set; }
+
+    // Status
+    private string StatusMessage { get; set; } = "";
+
+    // ✨ NEW: Independent toggle methods for each field ✨
+    private void TogglePasswordVisibility()
+    {
+        ShowPassword = !ShowPassword;
+    }
+
+    private void ToggleConfirmPasswordVisibility()
+    {
+        ShowConfirmPassword = !ShowConfirmPassword;
+    }
+
+    private void HandleLogoUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file.Size > 1048576)
+        {
+            LogoError = "File size must be 1MB or below.";
+        }
+        else
+        {
+            LogoError = "";
+        }
+    }
+
+    private void HandleRegistration()
+    {
+        if (!string.IsNullOrEmpty(LogoError))
+        {
+            StatusMessage = "Error: Please fix file upload errors before submitting.";
+            return;
+        }
+
+        if (Password != ConfirmPassword)
+        {
+            StatusMessage = "Error: Passwords do not match. Please try again.";
+            return;
+        }
+
+        if (AuthorityType == "School" && IsBoardDisabled)
+        {
+            AffiliatedBoard = "N/A";
+        }
+
+        StatusMessage = $"Master tenant setup for {Subdomain}.classroomgazette.com initiated successfully!";
+    }
+}

@@ -1,0 +1,68 @@
+﻿@page "/pricing"
+@rendermode InteractiveServer
+
+<div class="subscription-container">
+    <div class="header-section">
+        <h2>Choose Your Plan</h2>
+        <p class="subtitle">Simple, transparent pricing for institutions of all sizes.</p>
+    </div>
+
+    <div class="pricing-grid">
+        <!-- 3 Months Plan -->
+        <div class="pricing-card">
+            <h3>Quarterly</h3>
+            <div class="price"><span>₹</span>1,499<span class="duration">/ 3 mos</span></div>
+            <ul class="features">
+                <li>✔️ Up to 500 Students</li>
+                <li>✔️ Attendance Management</li>
+                <li>✔️ Basic Timetables</li>
+                <li>✔️ Standard Email Support</li>
+            </ul>
+            <button class="btn btn-secondary" @onclick='() => SelectPlan("Quarterly (3 Months)")'>Select Plan</button>
+        </div>
+
+        <!-- 6 Months Plan (Featured) -->
+        <div class="pricing-card featured">
+            <div class="badge">Most Popular</div>
+            <h3>Half-Yearly</h3>
+            <div class="price"><span>₹</span>2,799<span class="duration">/ 6 mos</span></div>
+            <ul class="features">
+                <li>✔️ Up to 1,500 Students</li>
+                <li>✔️ Advanced Assignment Tools</li>
+                <li>✔️ Subject-wise Analytics</li>
+                <li>✔️ Priority Email Support</li>
+            </ul>
+            <button class="btn btn-primary" @onclick='() => SelectPlan("Half-Yearly (6 Months)")'>Select Plan</button>
+        </div>
+
+        <!-- 12 Months Plan -->
+        <div class="pricing-card">
+            <h3>Annual</h3>
+            <div class="price"><span>₹</span>4,999<span class="duration">/ 12 mos</span></div>
+            <ul class="features">
+                <li>✔️ Unlimited Students</li>
+                <li>✔️ Full Role-Based Access</li>
+                <li>✔️ Custom School Branding</li>
+                <li>✔️ 24/7 Priority Support</li>
+            </ul>
+            <button class="btn btn-secondary" @onclick='() => SelectPlan("Annual (12 Months)")'>Select Plan</button>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(StatusMessage))
+    {
+        <div class="status-msg">
+            @StatusMessage
+        </div>
+    }
+</div>
+
+@code {
+    private string StatusMessage { get; set; } = "";
+
+    private void SelectPlan(string planName)
+    {
+        // In the future, this C# method will integrate with Razorpay or Stripe to process the ₹ payment!
+        StatusMessage = $"You selected the {planName} plan. Redirecting to secure payment gateway...";
+    }
+}

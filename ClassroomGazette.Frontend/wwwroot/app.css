@@ -1,0 +1,434 @@
+/* wwwroot/app.css */
+:root {
+    --gold: #f7d400;
+    --purple: #a770ef;
+    --neon: #66d1ff;
+    --bg-dark: #07050a;
+    --panel: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+    --text: #eef6ff;
+    --muted: #b8cfe0;
+    --glass: rgba(255,255,255,0.03);
+    --accent-gradient: linear-gradient(90deg, var(--purple) 0%, var(--neon) 60%, var(--gold) 100%);
+    --card-border: rgba(167,117,239,0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    min-height: 100vh;
+    height: auto;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at 10% 10%, rgba(103,58,183,0.06), transparent 8%), radial-gradient(circle at 90% 80%, rgba(102,209,255,0.03), transparent 12%), var(--bg-dark) url('Pictures/Background.jpg') no-repeat center/cover;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* NAVBAR */
+.navbar {
+    width: 100%;
+    background: rgba(2,2,6,0.85);
+    padding: 12px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid rgba(247,212,0,0.06);
+    position: fixed;
+    top: 0;
+    z-index: 60;
+    backdrop-filter: blur(4px);
+    transition: background 0.3s ease;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 100;
+}
+
+    .navbar-left img {
+        height: 52px;
+        width: auto;
+        border-radius: 6px;
+        box-shadow: 0 6px 20px rgba(103,58,183,0.08);
+    }
+
+.navbar-title {
+    font-size: 18px;
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.2px;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+    .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 700;
+        margin-left: 18px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        transition: all .18s ease;
+        border: 1px solid transparent;
+        font-size: 14px;
+        cursor: pointer;
+        position: relative;
+    }
+
+        .nav-links a.active, .nav-links a:hover {
+            color: #000;
+            background: var(--gold);
+            box-shadow: 0 8px 18px rgba(247,212,0,0.06), 0 0 12px rgba(102,209,255,0.03) inset;
+        }
+
+        .nav-links a:after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: -6px;
+            height: 3px;
+            background: transparent;
+            border-radius: 3px;
+            transition: all .22s ease;
+        }
+
+        .nav-links a:hover:after {
+            background: var(--gold);
+            left: 6px;
+            right: 6px;
+            bottom: -8px;
+        }
+
+/* --- DROPDOWN MENUS --- */
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 10px;
+    background: var(--bg-dark);
+    min-width: 220px;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    border: 1px solid var(--card-border);
+    flex-direction: column;
+    padding: 8px 0;
+    z-index: 100;
+}
+
+    .dropdown-content a {
+        margin: 4px 12px;
+        padding: 10px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+    }
+
+        .dropdown-content a:after {
+            display: none; /* Hide the golden underline inside dropdown */
+        }
+
+        .dropdown-content a:hover {
+            background: var(--glass);
+            box-shadow: none;
+            color: var(--gold);
+        }
+
+/* Show dropdown on hover (Desktop only) */
+@media(min-width: 981px) {
+    .dropdown:hover .dropdown-content {
+        display: flex;
+        animation: slideUpFade 0.2s ease forwards;
+    }
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* FOOTER & MISC */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    color: var(--muted);
+    padding-bottom: 28px;
+}
+
+.to-top {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    background: var(--gold);
+    color: #000;
+    padding: 10px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    display: none;
+    z-index: 80;
+}
+
+/* --- LIGHT MODE VARIABLES --- */
+body.light-mode {
+    --bg-dark: #f4f7f9;
+    --text: #1a1a24;
+    --muted: #5e6b73;
+    --panel: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.06));
+    --glass: rgba(0,0,0,0.05);
+    --card-border: rgba(167,117,239,0.2);
+}
+
+    body.light-mode .navbar {
+        background: rgba(255, 255, 255, 0.95);
+        border-bottom: 2px solid rgba(0,0,0,0.1);
+    }
+
+    body.light-mode .feedback-grid input, body.light-mode .feedback-grid textarea {
+        background: #ffffff;
+        color: #000000;
+        border: 1px solid #d1d5db;
+    }
+
+    /* Light Mode Dropdown */
+    body.light-mode .dropdown-content {
+        background: #ffffff;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        border: 1px solid #e5e7eb;
+    }
+
+        body.light-mode .dropdown-content a:hover {
+            background: #f4f7f9;
+            color: var(--neon);
+        }
+
+/* --- ANIMATED SUN/MOON THEME TOGGLE SWITCH --- */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 68px;
+    height: 34px;
+    margin-left: 24px;
+    cursor: pointer;
+}
+
+    .theme-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .theme-switch .slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #1a1a24;
+        transition: .4s;
+        border-radius: 34px;
+        border: 2px solid rgba(167,117,239,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 6px;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .theme-switch .icon {
+        font-size: 14px;
+        z-index: 1;
+        user-select: none;
+    }
+
+    .theme-switch .knob {
+        position: absolute;
+        height: 26px;
+        width: 26px;
+        left: 2px;
+        bottom: 2px;
+        background-color: var(--neon);
+        transition: .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        border-radius: 50%;
+        z-index: 2;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    .theme-switch input:checked + .slider {
+        background-color: #d1e5f7;
+        border-color: rgba(247,212,0,0.8);
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+        .theme-switch input:checked + .slider .knob {
+            transform: translateX(34px);
+            background-color: var(--gold);
+        }
+
+/* --- MOBILE HAMBURGER MENU --- */
+.mobile-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--gold);
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 12px;
+}
+
+@media(max-width: 980px) {
+    .mobile-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 260px;
+        height: 100vh;
+        background: var(--bg-dark);
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 80px;
+        transition: left 0.3s ease;
+        border-right: 1px solid var(--card-border);
+        box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        z-index: 90;
+        overflow-y: auto;
+    }
+
+        .nav-links.open {
+            left: 0;
+        }
+
+        .nav-links a {
+            margin: 10px 24px;
+            font-size: 16px;
+            width: calc(100% - 48px);
+        }
+
+    /* Mobile Dropdown Overrides */
+    .dropdown {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+        padding: 0;
+        margin-top: 5px;
+    }
+
+    /* JS triggers this active class on mobile tap */
+    .dropdown.active .dropdown-content {
+        display: flex;
+    }
+
+    .dropdown-content a {
+        margin: 5px 24px 5px 48px;
+        width: calc(100% - 72px);
+    }
+
+    body.light-mode .dropdown-content {
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+
+    .theme-switch {
+        margin: 20px 24px;
+    }
+}
+
+/* LIGHT MODE VARIABLE OVERRIDES */
+body.light-mode {
+    --bg-dark: #d2dbe2; /* 1. Deeper, soothing slate-gray background to completely kill the glare */
+    --panel: #edf1f5; /* 2. Soft grayish-blue for the Card so it isn't blindingly white */
+    --glass: #ffffff; /* 3. Pure white ONLY for the input boxes so they pop out */
+
+    --text: #1e293b; /* Darker, crisper slate for better reading contrast */
+    --muted: #475569; /* Darker gray for the labels */
+    --card-border: #bdc5cd; /* A slightly stronger border to frame the card beautifully */
+
+    background: var(--bg-dark);
+}
+
+    /* Force Date Picker shadow DOM to obey the text variable globally */
+    body.light-mode ::-webkit-datetime-edit-text,
+    body.light-mode ::-webkit-datetime-edit-month-field,
+    body.light-mode ::-webkit-datetime-edit-day-field,
+    body.light-mode ::-webkit-datetime-edit-year-field {
+        color: var(--text) !important;
+    }
+
+/* GLOBAL FILE UPLOAD STYLING */
+.file-upload {
+    padding: 7px 9px;
+    font-size: 0.95rem;
+    color: var(--text) !important; /* Forces 'No file chosen' to adapt to light/dark mode */
+    background: var(--glass);
+    border-radius: 8px;
+    border: 1.5px solid rgba(255,255,255,0.06);
+    box-sizing: border-box;
+}
+
+    .file-upload::file-selector-button {
+        background: var(--accent-gradient);
+        color: #111;
+        font-weight: 800;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        margin-right: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        .file-upload::file-selector-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(167,117,239,0.3);
+        }

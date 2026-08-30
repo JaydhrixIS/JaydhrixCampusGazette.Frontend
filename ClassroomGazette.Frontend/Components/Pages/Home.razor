@@ -1,0 +1,169 @@
+﻿@page "/"
+
+<!-- HERO -->
+<div class="hero-wrap">
+    <section class="hero">
+        <div class="hero-illu">
+            <img src="Pictures/home_page_picture.jpeg" alt="illustration">
+        </div>
+        <div class="hero-content">
+            <div class="eyebrow">You Think, We Create</div>
+            <h1 class="title">Services that simplify classroom administration</h1>
+            <p class="lead">From attendance and assignments to timetables and events — Jaydhirx Campus Gazette provides role-based tools designed to make academic workflows simple and transparent.</p>
+            <div class="hero-cta"><a href="#services" class="btn btn-primary">Explore Services</a></div>
+        </div>
+    </section>
+</div>
+
+<main class="wrap">
+    <!-- Services -->
+    <section id="services" class="section">
+        <h2>Our Services</h2>
+        <div class="services-grid" id="servicesGrid">
+            <div class="service-card" data-idx="1">
+                <h3>Attendance Management</h3>
+                <p>Lecture-wise attendance, bulk updates and subject-wise analytics for accurate reporting.</p>
+            </div>
+
+            <div class="service-card" data-idx="2">
+                <h3>Assignment Handling</h3>
+                <p>Upload, submission tracking, grading and feedback — all in one place.</p>
+            </div>
+
+            <div class="service-card" data-idx="3">
+                <h3>Lecture Timetable</h3>
+                <p>Create and manage subject-wise timetables with notifications and calendar export.</p>
+            </div>
+
+            <div class="service-card" data-idx="4">
+                <h3>Event Notifications</h3>
+                <p>Admin and faculty can publish events that appear on student dashboards and email digests.</p>
+            </div>
+
+            <div class="service-card" data-idx="5">
+                <h3>Performance Reports</h3>
+                <p>Generate attendance, assignment and overall performance reports for auditing and parent communication.</p>
+            </div>
+
+            <div class="service-card" data-idx="6">
+                <h3>Role-Based Access</h3>
+                <p>Secure dashboards for Admin, Faculty and Students with appropriate permissions and views.</p>
+            </div>
+
+            <div class="service-card" data-idx="7">
+                <h3>Parent Portal</h3>
+                <p>A secure, dedicated role for parents to track their child's attendance and academic performance in real-time.</p>
+            </div>
+
+            <div class="service-card" data-idx="8">
+                <h3>White-Labeling</h3>
+                <p>Customize the platform with your institution's logo and primary colors to match your school's unique branding.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section">
+        <h2>Why choose Classroom Gazette</h2>
+        <div class="features">
+            <div class="feature"><div class="dot">01</div><div class="desc"><strong>Easy-to-use</strong><div class="muted">Designed for faculty and students with minimal training.</div></div></div>
+            <div class="feature"><div class="dot">02</div><div class="desc"><strong>Fast Reporting</strong><div class="muted">Exportable reports in PDF/CSV for admin review.</div></div></div>
+            <div class="feature"><div class="dot">03</div><div class="desc"><strong>Secure</strong><div class="muted">Role-based access and session controls.</div></div></div>
+            <div class="feature"><div class="dot">04</div><div class="desc"><strong>Responsive</strong><div class="muted">Works across devices — mobile, tablet and desktop.</div></div></div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq">
+            <details class="faq-item"><summary>Can students view their attendance?</summary><p>Yes — students can view subject-wise and overall attendance percentages and history.</p></details>
+            <details class="faq-item"><summary>How are assignments graded?</summary><p>Faculty can upload marks and feedback which are visible to students once published.</p></details>
+            <details class="faq-item"><summary>Can events be approved by admin?</summary><p>Yes — faculty events can be approved or rejected by admin before publishing.</p></details>
+        </div>
+
+        <div class="faq">
+            <h3 style="color:var(--neon); margin: 16px 0 8px;">For Institutions</h3>
+            <details class="faq-item"><summary>Can we use our own school logo?</summary><p>Yes, our White-Labeling feature allows you to upload your institution's logo and adjust brand colors.</p></details>
+            <details class="faq-item"><summary>How many students can the system handle?</summary><p>Classroom Gazette is built on a scalable cloud architecture and can handle anywhere from 100 to 50,000+ students across multiple campuses.</p></details>
+            <details class="faq-item"><summary>Can events be approved by admin?</summary><p>Yes — faculty events can be approved or rejected by admin before publishing to the dashboard.</p></details>
+
+            <h3 style="color:var(--neon); margin: 24px 0 8px;">For Students & Parents</h3>
+            <details class="faq-item"><summary>Can students view their attendance?</summary><p>Yes — students have a dedicated dashboard to view subject-wise and overall attendance percentages and history.</p></details>
+            <details class="faq-item"><summary>How are assignments graded?</summary><p>Faculty can upload marks and feedback which are immediately visible to students and parents once published.</p></details>
+            <details class="faq-item"><summary>Do parents get login credentials?</summary><p>Yes, parents are provided secure credentials to monitor their child's progress independently of the student account.</p></details>
+        </div>
+    </section>
+
+    <!-- Feedback (form at end of page) -->
+    <section id="feedback" class="section">
+        <h2>Feedback</h2>
+        <div class="feedback-card">
+            <form @onsubmit="SubmitFeedback">
+                <div class="feedback-grid">
+                    <div>
+                        <label for="fbName">Name</label>
+                        <input id="fbName" @bind="feedbackName" type="text" placeholder="Your name" required />
+                    </div>
+                    <div>
+                        <label for="fbEmail">Email</label>
+                        <input id="fbEmail" @bind="feedbackEmail" type="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="full">
+                        <label for="fbMessage">Message</label>
+                        <textarea id="fbMessage" @bind="feedbackMessage" placeholder="Tell us what you think..." required></textarea>
+                    </div>
+                    <div class="full" style="display:flex;align-items:center;gap:12px;">
+                        <button type="submit" class="btn btn-primary">Send Feedback</button>
+                        <button type="button" class="btn" @onclick="ClearForm">Clear</button>
+                        <div style="flex:1"></div>
+                    </div>
+                </div>
+            </form>
+
+            @if (!string.IsNullOrEmpty(statusMessage))
+            {
+                <div class="feedback-note" style="display:block;margin-top:12px;color:var(--gold);">
+                    @statusMessage
+                </div>
+            }
+        </div>
+    </section>
+</main>
+
+<button id="toTop" class="to-top" aria-label="Back to top">↑</button>
+
+@code {
+    // These variables hold the data typed into the form
+    private string feedbackName = "";
+    private string feedbackEmail = "";
+    private string feedbackMessage = "";
+    private string statusMessage = "";
+
+    // This method runs when the user clicks "Send Feedback"
+    private async Task SubmitFeedback()
+    {
+        // 1. Show a loading message
+        statusMessage = "Sending feedback...";
+
+        // 2. Simulate a slight network delay (replace this with a real API call later!)
+        await Task.Delay(900);
+
+        // 3. Show success message using the user's name
+        statusMessage = $"Thank you {feedbackName} — your feedback has been recorded.";
+
+        // 4. Wipe the form inputs clean
+        feedbackName = "";
+        feedbackEmail = "";
+        feedbackMessage = "";
+    }
+
+    // This method runs when the user clicks "Clear"
+    private void ClearForm()
+    {
+        feedbackName = "";
+        feedbackEmail = "";
+        feedbackMessage = "";
+        statusMessage = "";
+    }
+}
